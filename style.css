@@ -45,4 +45,9 @@ button {
   border-radius: 8px;
   height: 150px;
   overflow-y: auto;
+  text-align: left;
 }
+
+.common { color: gray; }
+.rare { color: blue; }
+.epic { color: purple; }

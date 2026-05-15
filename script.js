@@ -4,7 +4,12 @@ let luck = 0;
 let inventory = [];
 
 function clickCoin() {
-  money += power;
+  let gain = power;
+  if (Math.random() < 0.05) { // 5% critical hit
+    gain *= 2;
+    logMessage("💥 Critical Click! Earned double coins.");
+  }
+  money += gain;
   updateStats();
 }
 
@@ -43,11 +48,15 @@ function buyBox(box) {
   money -= cost;
   updateStats();
 
-  let rarity = getRarity(rarityChance);
-  let food = getFood(rarity);
-  inventory.push(food + " (" + rarity + ")");
-  updateInventory();
-  logMessage("Opened Box " + box + " → " + food + " (" + rarity + ")");
+  logMessage("Opening Box " + box + "... 🎁");
+
+  setTimeout(() => {
+    let rarity = getRarity(rarityChance);
+    let food = getFood(rarity);
+    inventory.push({ name: food, rarity: rarity, value: cost / 2 });
+    updateInventory();
+    logMessage("Opened Box " + box + " → " + food + " (" + rarity + ")");
+  }, 500);
 }
 
 function getRarity(chances) {
@@ -71,15 +80,27 @@ function getFood(rarity) {
 function updateInventory() {
   let inv = document.getElementById("inventory");
   inv.innerHTML = "";
-  inventory.forEach(item => {
+  inventory.forEach((item, index) => {
     let li = document.createElement("li");
-    li.textContent = item;
+    li.textContent = item.name + " (" + item.rarity + ")";
+    li.className = item.rarity.toLowerCase();
+    li.onclick = () => sellItem(index);
     inv.appendChild(li);
   });
 }
 
+function sellItem(index) {
+  let item = inventory[index];
+  money += item.value;
+  inventory.splice(index, 1);
+  updateInventory();
+  updateStats();
+  logMessage("Sold " + item.name + " for $" + item.value);
+}
+
 function logMessage(msg) {
   let log = document.getElementById("log");
-  log.innerHTML += msg + "<br>";
+  let time = new Date().toLocaleTimeString();
+  log.innerHTML += "[" + time + "] " + msg + "<br>";
   log.scrollTop = log.scrollHeight;
 }

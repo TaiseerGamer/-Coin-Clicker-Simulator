@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coin Clicker Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>💰 Coin Clicker Simulator</h1>
+  <div class="coin" onclick="clickCoin()">💰</div>
+
+  <div class="stats">
+    <p>Money: $<span id="money">0</span></p>
+    <p>Click Power: <span id="power">1</span></p>
+    <p>Luck: <span id="luck">0</span>%</p>
+  </div>
+
+  <div class="shop">
+    <h2>🛒 Shop</h2>
+    <button onclick="buyUpgrade('power')">Upgrade Power ($50)</button>
+    <button onclick="buyUpgrade('luck')">Upgrade Luck ($100)</button>
+  </div>
+
+  <div class="boxes">
+    <h2>📦 Boxes</h2>
+    <button onclick="buyBox(1)">Box 1 ($10)</button>
+    <button onclick="buyBox(2)">Box 2 ($50)</button>
+    <button onclick="buyBox(3)">Box 3 ($200)</button>
+  </div>
+
+  <div class="inventory">
+    <h2>🎒 Inventory</h2>
+    <ul id="inventory"></ul>
+  </div>
+
+  <div class="log" id="log"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
